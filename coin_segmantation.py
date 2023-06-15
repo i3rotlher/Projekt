@@ -138,32 +138,22 @@ def getRectangleCoordinates(img):
 
     return label_rectangles
 
-def drawRectangles(img, rectanglesCoordinates): 
-    new_img = img.copy()
-    for rectangle in rectanglesCoordinates.values():
-        x_min, y_min, x_max, y_max = rectangle
-        for y in [y_min, y_max+1]:
-            for x in range(x_min, x_max+1):
-                new_img[y,x] = [255,0,0]
-        for x in [x_min, x_max+1]:
-            for y in range(y_min, y_max+1):
-                new_img[y,x] = [255,0,0]
-    return new_img
-
-def get_circle_in_rectangles(rectangles):
+def get_circle_in_rectangles(img, rectangles):
+    circles = []
     for lable, rectangle in rectangles.items():
-        pixels = []
-
         x_min, y_min, x_max, y_max = rectangle
+        pixels =  np.zeros((y_max-y_min+1,x_max-x_min+1,3), dtype=np.uint8)
 
         radius = min(x_max - x_min, y_max - y_min) // 2
 
         center_x = (x_min + x_max) // 2
         center_y = (y_min + y_max) // 2
 
-        for i in range(x_min, x_max + 1):
-            for j in range(y_min, y_max + 1):
+        for i in range(x_min, x_max):
+            for j in range(y_min, y_max):
                 if (i - center_x)**2 + (j - center_y)**2 <= radius**2:
-                    pixels.append((i, j))
+                    pixels[j-y_min,i-x_min]=img[j, i]
+        
+        circles.append(pixels)
 
-    return pixels
+    return circles
