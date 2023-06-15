@@ -2,7 +2,7 @@ import coin_segmantation as cs
 import image_preprocessing as ip
 import imager_reader as ir
 import matplotlib.pyplot as plt
-
+import cv2
 
 def muenzenZaehlen(): 
     original = ir.read_image("image.png")
@@ -19,21 +19,21 @@ def muenzenZaehlen():
     rectangles = cs.getRectangleCoordinates(labeled_image)
     image_rects = drawRectangles(original, rectangles)
 
-    # plt.subplot(221)
-    # plt.imshow(original)
-    # plt.title("Original Image 1")
-    # plt.axis('off')
+    plt.subplot(221)
+    plt.imshow(original)
+    plt.title("Original Image 1")
+    plt.axis('off')
 
-    # plt.subplot(222)
-    # plt.imshow(labeled_image, cmap='jet')
-    # plt.title("Labled Image 1")
-    # plt.axis('off')
+    plt.subplot(222)
+    plt.imshow(labeled_image, cmap='jet')
+    plt.title("Labled Image 1")
+    plt.axis('off')
 
-    # plt.subplot(223)
-    # plt.imshow(image_rects, cmap="jet")
-    # plt.title("Image with rectangles")
-    # plt.axis('off')
-    # plt.show()
+    plt.subplot(223)
+    plt.imshow(image_rects, cmap="jet")
+    plt.title("Image with rectangles")
+    plt.axis('off')
+    plt.show()
 
     plot_images(cs.get_circle_in_rectangles(original, rectangles))
 
@@ -48,6 +48,7 @@ def plot_images(images, num_cols=3):
         ax = axes[i // num_cols, i % num_cols]
         ax.imshow(image)
         ax.axis('off')
+        cv2.imwrite("coin"+str(i)+".png", image)
 
     plt.show()
 
