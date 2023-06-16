@@ -1,64 +1,130 @@
 <!DOCTYPE html>
+<head>
+  <title>Global Styles Example</title>
+  <style>
+    .coins img {
+      width: 100px;
+    }
+    .separator {
+    border: none;
+    background-color: grey;
+    height: 4px;
+    opacity: 0.5;
+    margin: 20px 0;
+    border-radius: 5px;
+    }
+  </style>
+</head>
 <body>
-    <div style="display: flex;flex-direction: column;">
-        <div style="display: flex;">
-            <div style="display: flex;flex-direction: column;">
-                <h2>Original Image:</h2>
-                <img src="original_img">
-            </div>
+  <div style="display: flex; flex-direction: column">
+    <div style="display: flex">
+      <div style="display: flex; flex-direction: column">
+        <img style="height: 350px" src="original_img" />
+      </div>
 
-            <div style="display: flex;flex-direction: column;padding-left: 25px;justify-content: center;width: -webkit-fill-available;">
-                <h2>Total: total_amount €</h2>
-                <h3>Detected Coins:</h3>
-                <div style="display: flex;flex-direction: row;justify-content: space-evenly;">
-                    <div>
-                        <h3> one_cent_amount </h3>
-                        <img style="width:150px" src=https://upload.wikimedia.org/wikipedia/de/a/a8/1_cent_coin_Eu_serie_1.png>
-                    </div>
-                    <div>
-                        <h3> two_cent_amount </h3>
-                        <img style="width:150px" src="https://upload.wikimedia.org/wikipedia/de/a/a5/2_cent_coin_Eu_serie_1.png">
-                    </div>
-                    <div>
-                        <h3> five_cent_amount </h3>
-                        <img style="width:150px" src="https://upload.wikimedia.org/wikipedia/de/c/c4/5_cent_coin_Eu_serie_1.png?20120419195807">
-                    </div>
-                    <div>
-                        <h3> ten_cent_amount </h3>
-                        <img style="width:150px" src="https://upload.wikimedia.org/wikipedia/de/1/18/10-Cent-Vorderseite_ab_2007.jpg?20141126155750">
-                    </div>
-                    <div>
-                        <h3> twenty_cent_amount </h3>
-                        <img style="width:150px" src="https://upload.wikimedia.org/wikipedia/de/5/52/20-Cent-Vorderseite_ab_2007.jpg?20141126155640">
-                    </div>
-                    <div>
-                        <h3> fifty_cent_amount </h3>
-                        <img style="width:150px" src="https://upload.wikimedia.org/wikipedia/de/a/ac/50-Cent-Vorderseite_ab_2007.jpg?20141126155525">
-                    </div>
-                    <div>
-                        <h3> one_euro_amount </h3>
-                        <img style="width:150px" src="https://upload.wikimedia.org/wikipedia/de/c/ca/1_Euro_Common_Sides_New_Design.gif?20131126173601">
-                    </div>
-                    <div>
-                        <h3> two_euro_amount </h3>
-                        <img style="width:150px" src="https://upload.wikimedia.org/wikipedia/de/c/c5/2_Euro_Common_Sides_New_Design_.gif?20131126171841">
-                    </div>
-                </div>
-            </div>
+      <div
+        style="
+          display: flex;
+          flex-direction: column;
+          padding-left: 25px;
+          justify-content: center;
+          width: -webkit-fill-available;
+        "
+      >
+        <div
+          style="
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            margin-right: 35px;
+          "
+        >
+          <h3>Detected Coins:</h3>
+          <h2 style="text-decoration: underline">Total: total_amount €</h2>
         </div>
-        <div style="display: flex;flex-direction: row;justify-content: space-evenly;">
-            <div>
-                <h3>Labled Image</h3>
-                <img style="width:540px" src="labled_img">
-            </div>
-            <div>
-                <h3>Found Coin Rectangles</h3>
-                <img style="width:540px" src="rect_img">
-            </div>
-            <div>
-                <h3>Found Coins</h3>
-                <img style="width:540px" src="detected_coins_img">
-            </div>
+        <div
+          class="coins"
+          style="
+            display: flex;
+            flex-direction: row;
+            justify-content: space-evenly;
+          "
+        >
+          <div>
+            <h3>one_cent_amountx</h3>
+            <img style="width:115px;opacity:one_cent_opacity"
+            src=https://upload.wikimedia.org/wikipedia/de/a/a8/1_cent_coin_Eu_serie_1.png>
+          </div>
+          <div>
+            <h3>two_cent_amountx</h3>
+            <img
+              style="width: 115px;opacity:two_cent_opacity"
+              src="https://upload.wikimedia.org/wikipedia/de/a/a5/2_cent_coin_Eu_serie_1.png"
+            />
+          </div>
+          <div>
+            <h3>five_cent_amountx</h3>
+            <img
+              style="width: 115px;opacity:five_cent_opacity"
+              src="https://upload.wikimedia.org/wikipedia/de/c/c4/5_cent_coin_Eu_serie_1.png?20120419195807"
+            />
+          </div>
+          <div>
+            <h3>ten_cent_amountx</h3>
+            <img
+              style="width: 115px;opacity:ten_cent_opacity"
+              src="https://upload.wikimedia.org/wikipedia/de/1/18/10-Cent-Vorderseite_ab_2007.jpg?20141126155750"
+            />
+          </div>
+          <div>
+            <h3>twenty_cent_amountx</h3>
+            <img
+              style="width: 115px;opacity:twenty_cent_opacity"
+              src="https://upload.wikimedia.org/wikipedia/de/5/52/20-Cent-Vorderseite_ab_2007.jpg?20141126155640"
+            />
+          </div>
+          <div>
+            <h3>fifty_cent_amountx</h3>
+            <img
+              style="width: 115px;opacity:fifty_cent_opacity"
+              src="https://upload.wikimedia.org/wikipedia/de/a/ac/50-Cent-Vorderseite_ab_2007.jpg?20141126155525"
+            />
+          </div>
+          <div>
+            <h3>one_euro_amountx</h3>
+            <img
+              style="width: 115px;opacity:one_euro_opacity"
+              src="https://upload.wikimedia.org/wikipedia/de/c/ca/1_Euro_Common_Sides_New_Design.gif?20131126173601"
+            />
+          </div>
+          <div>
+            <h3>two_euro_amountx</h3>
+            <img
+              style="width: 115px;opacity:two_euro_opacity"
+              src="https://upload.wikimedia.org/wikipedia/de/c/c5/2_Euro_Common_Sides_New_Design_.gif?20131126171841"
+            />
+          </div>
         </div>
+      </div>
     </div>
+    <hr class="separator">
+    <div
+      style="display: flex; flex-direction: row;justify-content: space-around;"
+    >
+      <h3>Labled Image</h3>
+      <h3>Found Coin Rectangles</h3>
+      <h3>Found Coins</h3>
+    </div>
+    <div style="display: flex; flex-direction: row; align-items: center; justify-content: space-around;">
+      <div>
+        <img style="max-width: 540px" src="labled_img" />
+      </div>
+      <div>
+        <img style="max-width: 540px" src="rect_img" />
+      </div>
+      <div>
+        <img style="max-width: 540px" src="detected_coins_img" />
+      </div>
+    </div>
+  </div>
 </body>

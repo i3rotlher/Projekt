@@ -54,6 +54,16 @@ def plot_images(images, titles, num_cols=3):
         ax.set_title(titles[i])
         ax.axis('off')
 
+    # Remove empty subplots if necessary
+    if num_images < num_rows * num_cols:
+        for j in range(num_images, num_rows * num_cols):
+            if num_rows > 1:
+                ax = axes[j // num_cols, j % num_cols]
+            else:
+                ax = axes[j % num_cols]
+            ax.axis('off')
+            ax.set_visible(False)
+
     plt.savefig("GUI/tmp/detected_coins.png")
 
 def drawRectangles(img, rectanglesCoordinates): 
@@ -78,6 +88,7 @@ def muenzenZaehlen(imgpath):
     # Figure 1
     plt.figure()
     plt.imshow(original)
+
     plt.axis('off')
     plt.savefig("GUI/tmp/original.png")
 
