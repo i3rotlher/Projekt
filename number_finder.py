@@ -3,7 +3,7 @@ import pytesseract
 
 def recognize_numbers(image_path):
     # Lade das Bild mit OpenCV
-    image = cv2.imread("C:\\Users\\skill\\OneDrive\\AIN\\Semester 8\\2D-ComputerVision\\Projekt\\untitled.png")
+    image = cv2.imread(image_path)
     
     # Konvertiere das Bild in Graustufen, um die Zahlenerkennung zu erleichtern
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)

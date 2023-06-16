@@ -5,8 +5,34 @@ import imager_reader as ir
 import matplotlib.pyplot as plt
 import numpy as np
 
+def map_coin_to_float(coin):
+    if coin == '1ct':
+        return 0.01
+    elif coin == '2ct':
+        return 0.02
+    elif coin == '5ct':
+        return 0.05
+    elif coin == '10ct':
+        return 0.10
+    elif coin == '20ct':
+        return 0.20
+    elif coin == '50ct':
+        return 0.50
+    elif coin == '1€':
+        return 1.00
+    elif coin == '2€':
+        return 2.00
+    else:
+        return None
+
+def countCoins(coins):
+    total = 0.0
+    for coin in coins: 
+        total += map_coin_to_float(coin)
+    return total
+
 def muenzenZaehlen(): 
-    original = ir.read_image("image.png")
+    original = ir.read_image("test3.png")
     binary_image = ip.to1Bit(ip.preprocess_image(original), 50)
     labeled_image = cs.segment_coins(binary_image)
 
@@ -39,7 +65,10 @@ def muenzenZaehlen():
     coins_found = ci.identifyCoins(original, rectangles)
     plot_images(cs.get_circle_in_rectangles(original, rectangles), coins_found)
 
+    print("Your total was: " + str(round(countCoins(coins_found), 2))+ "Euro")
+
 def plot_images(images, titles, num_cols=3):
+    num_cols = min(3, len(images))
     num_images = len(images)
     num_rows = (num_images + num_cols - 1) // num_cols
 

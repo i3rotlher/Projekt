@@ -57,10 +57,9 @@ def analyzeColor(coin_cutout):
     silver = silverAmount(coin_cutout)
 
     if "€" in silver:      
-        return silver
+        return ["1€", "2€"]
     
     red = calculate_average_red(coin_cutout)
-    print(red)
     if red < 200:
         return ["10ct", "20ct", "50ct"]
 
