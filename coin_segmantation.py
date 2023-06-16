@@ -136,7 +136,22 @@ def getRectangleCoordinates(img):
                     if y > (label_rectangles[label][3]):
                         label_rectangles[label][3] = y
 
-    return label_rectangles
+    res = filter_none_coins(label_rectangles)
+
+    return res
+
+def filter_none_coins(rectangle_dic):
+    res = {}
+    for key, rectangle in rectangle_dic.items():
+        x_min, y_min, x_max, y_max = rectangle
+        x_width = x_max - x_min
+        y_width = y_max-y_min
+        if x_width < 50 or y_width < 50:
+            continue
+        if (x_width < y_width - 10) or (x_width > y_width + 10):
+            continue
+        res[key]  = rectangle
+    return res
 
 def get_circle_in_rectangles(img, rectangles):
     circles = []

@@ -4,6 +4,7 @@ import image_preprocessing as ip
 import imager_reader as ir
 import matplotlib.pyplot as plt
 import numpy as np
+import glob
 
 def map_coin_to_float(coin):
     if coin == '1ct':
@@ -31,8 +32,8 @@ def countCoins(coins):
         total += map_coin_to_float(coin)
     return total
 
-def muenzenZaehlen(): 
-    original = ir.read_image("test3.png")
+def muenzenZaehlen(imgpath): 
+    original = ir.read_image(imgpath)
     binary_image = ip.to1Bit(ip.preprocess_image(original), 50)
     labeled_image = cs.segment_coins(binary_image)
 
@@ -65,7 +66,7 @@ def muenzenZaehlen():
     coins_found = ci.identifyCoins(original, rectangles)
     plot_images(cs.get_circle_in_rectangles(original, rectangles), coins_found)
 
-    print("Your total was: " + str(round(countCoins(coins_found), 2))+ "Euro")
+    print("Your total was: " + str(countCoins(coins_found))+ "Euro")
 
 def plot_images(images, titles, num_cols=3):
     num_cols = min(3, len(images))
@@ -98,7 +99,13 @@ def drawRectangles(img, rectanglesCoordinates):
                 new_img[y,x] = [255,0,0]
     return new_img
 
-if __name__ == "__main__":
-    muenzenZaehlen()
+def main():
+    png_files = []
 
-muenzenZaehlen()
+    for file_path in glob.glob('inputs/*.png'):
+        png_files.append(file_path)
+
+    for file in png_files:
+        muenzenZaehlen(file)
+
+main()

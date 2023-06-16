@@ -30,7 +30,7 @@ def identifyCoin(coin_rec, coin_cutout):
     if second_width_guess in color_guess:
         return second_width_guess
     
-    return "No Clue ? widthguess = " + width_guess + "," + second_width_guess + "; color_guess = " + color_guess
+    return "No Clue ? widthguess = " + str(width_guess) + "," + str(second_width_guess) + "; color_guess = " + str(color_guess)
 
 def analyzeWidth(width):
     return find_closest_width(width)
@@ -60,7 +60,14 @@ def analyzeColor(coin_cutout):
         return ["1€", "2€"]
     
     red = calculate_average_red(coin_cutout)
-    if red < 200:
+    blue = calculate_average_blue(coin_cutout)
+    green = calculate_average_green(coin_cutout)
+    print(red)
+    print(green)
+    print(blue)
+    
+    print("_____")
+    if red-green < 35:
         return ["10ct", "20ct", "50ct"]
 
     return ["1ct", "2ct", "5ct"]
@@ -94,6 +101,20 @@ def silverAmount(coin_cutout):
     
 def calculate_average_red(image):
     red_channel = image[:,:,0]  # Extract the red channel
+    non_black_pixels = red_channel > 0  # Create a mask for non-black pixels
+    red_values = red_channel[non_black_pixels]  # Filter the red values using the mask
+    average_red = np.mean(red_values)  # Calculate the average red value
+    return average_red
+
+def calculate_average_blue(image):
+    red_channel = image[:,:,2]  # Extract the red channel
+    non_black_pixels = red_channel > 0  # Create a mask for non-black pixels
+    red_values = red_channel[non_black_pixels]  # Filter the red values using the mask
+    average_red = np.mean(red_values)  # Calculate the average red value
+    return average_red
+
+def calculate_average_green(image):
+    red_channel = image[:,:,1]  # Extract the red channel
     non_black_pixels = red_channel > 0  # Create a mask for non-black pixels
     red_values = red_channel[non_black_pixels]  # Filter the red values using the mask
     average_red = np.mean(red_values)  # Calculate the average red value
