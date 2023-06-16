@@ -3,7 +3,6 @@ import coin_identifier as ci
 import image_preprocessing as ip
 import imager_reader as ir
 import matplotlib.pyplot as plt
-import numpy as np
 import glob
 import GUI.gui as gui
 
@@ -29,9 +28,14 @@ def map_coin_to_float(coin):
 
 def countCoins(coins):
     total = 0.0
+    coins_counts = {}
     for coin in coins: 
         total += map_coin_to_float(coin)
-    return total
+        if coin in coins_counts:
+            coins_counts[coin] = coins_counts[coin] + 1
+        else:
+            coins_counts[coin] = 1
+    return total, coins_counts
     
 def plot_images(images, titles, num_cols=3):
     num_cols = min(3, len(images))
@@ -74,29 +78,26 @@ def muenzenZaehlen(imgpath):
     # Figure 1
     plt.figure()
     plt.imshow(original)
-    plt.title("Original Image 1")
     plt.axis('off')
     plt.savefig("GUI/tmp/original.png")
 
     # Figure 2
     plt.figure()
     plt.imshow(labeled_image, cmap='jet')
-    plt.title("Labeled Image 1")
     plt.axis('off')
     plt.savefig("GUI/tmp/labeled.png")
 
     # Figure 3
     plt.figure()
     plt.imshow(image_rects, cmap="jet")
-    plt.title("Image with rectangles")
     plt.axis('off')
     plt.savefig("GUI/tmp/rect.png")
 
     coins_found = ci.identifyCoins(original, rectangles)
     plot_images(cs.get_circle_in_rectangles(original, rectangles), coins_found)
-    total = countCoins(coins_found)
+    total, coin_counts = countCoins(coins_found)
 
-    gui.create_gui_window(coins_found, total)
+    gui.create_gui_window(coin_counts, total)
 
 def main():
     png_files = []
