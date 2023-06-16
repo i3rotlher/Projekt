@@ -1,8 +1,9 @@
 import coin_segmantation as cs
+import coin_identifier as ci
 import image_preprocessing as ip
 import imager_reader as ir
 import matplotlib.pyplot as plt
-import cv2
+import numpy as np
 
 def muenzenZaehlen(): 
     original = ir.read_image("image.png")
@@ -35,9 +36,10 @@ def muenzenZaehlen():
     plt.axis('off')
     plt.show()
 
-    plot_images(cs.get_circle_in_rectangles(original, rectangles))
+    coins_found = ci.identifyCoins(original, rectangles)
+    plot_images(cs.get_circle_in_rectangles(original, rectangles), coins_found)
 
-def plot_images(images, num_cols=3):
+def plot_images(images, titles, num_cols=3):
     num_images = len(images)
     num_rows = (num_images + num_cols - 1) // num_cols
 
@@ -45,10 +47,13 @@ def plot_images(images, num_cols=3):
     fig.tight_layout()
 
     for i, image in enumerate(images):
-        ax = axes[i // num_cols, i % num_cols]
+        if num_rows > 1:
+            ax = axes[i // num_cols, i % num_cols]
+        else:
+            ax = axes[i % num_cols]
         ax.imshow(image)
+        ax.set_title(titles[i])
         ax.axis('off')
-        cv2.imwrite("coin"+str(i)+".png", image)
 
     plt.show()
 
