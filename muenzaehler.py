@@ -5,6 +5,7 @@ import imager_reader as ir
 import matplotlib.pyplot as plt
 import numpy as np
 import glob
+import GUI.gui as gui
 
 def map_coin_to_float(coin):
     if coin == '1ct':
@@ -31,43 +32,7 @@ def countCoins(coins):
     for coin in coins: 
         total += map_coin_to_float(coin)
     return total
-
-def muenzenZaehlen(imgpath): 
-    original = ir.read_image(imgpath)
-    binary_image = ip.to1Bit(ip.preprocess_image(original), 50)
-    labeled_image = cs.segment_coins(binary_image)
-
-    # widths, lines = cs.calculateCircleWidth(labeled_image)
-    # image_widths = original.copy()
-    # image_widths = labeled_image.copy()
-    # for line in lines.values():
-    #     for x in range(line[0],line[1]+1):
-    #         image_widths[line[2], x] = 69
-
-    rectangles = cs.getRectangleCoordinates(labeled_image)
-    image_rects = drawRectangles(original, rectangles)
-
-    plt.subplot(221)
-    plt.imshow(original)
-    plt.title("Original Image 1")
-    plt.axis('off')
-
-    plt.subplot(222)
-    plt.imshow(labeled_image, cmap='jet')
-    plt.title("Labled Image 1")
-    plt.axis('off')
-
-    plt.subplot(223)
-    plt.imshow(image_rects, cmap="jet")
-    plt.title("Image with rectangles")
-    plt.axis('off')
-    plt.show()
-
-    coins_found = ci.identifyCoins(original, rectangles)
-    plot_images(cs.get_circle_in_rectangles(original, rectangles), coins_found)
-
-    print("Your total was: " + "{:.2f}".format(countCoins(coins_found))+ " Eur")
-
+    
 def plot_images(images, titles, num_cols=3):
     num_cols = min(3, len(images))
     num_images = len(images)
@@ -85,7 +50,7 @@ def plot_images(images, titles, num_cols=3):
         ax.set_title(titles[i])
         ax.axis('off')
 
-    plt.show()
+    plt.savefig("GUI/tmp/detected_coins.png")
 
 def drawRectangles(img, rectanglesCoordinates): 
     new_img = img.copy()
@@ -98,6 +63,40 @@ def drawRectangles(img, rectanglesCoordinates):
             for y in range(y_min, y_max+1):
                 new_img[y,x] = [255,0,0]
     return new_img
+
+def muenzenZaehlen(imgpath): 
+    original = ir.read_image(imgpath)
+    binary_image = ip.to1Bit(ip.preprocess_image(original), 50)
+    labeled_image = cs.segment_coins(binary_image)
+    rectangles = cs.getRectangleCoordinates(labeled_image)
+    image_rects = drawRectangles(original, rectangles)
+
+    # Figure 1
+    plt.figure()
+    plt.imshow(original)
+    plt.title("Original Image 1")
+    plt.axis('off')
+    plt.savefig("GUI/tmp/original.png")
+
+    # Figure 2
+    plt.figure()
+    plt.imshow(labeled_image, cmap='jet')
+    plt.title("Labeled Image 1")
+    plt.axis('off')
+    plt.savefig("GUI/tmp/labeled.png")
+
+    # Figure 3
+    plt.figure()
+    plt.imshow(image_rects, cmap="jet")
+    plt.title("Image with rectangles")
+    plt.axis('off')
+    plt.savefig("GUI/tmp/rect.png")
+
+    coins_found = ci.identifyCoins(original, rectangles)
+    plot_images(cs.get_circle_in_rectangles(original, rectangles), coins_found)
+    total = countCoins(coins_found)
+
+    gui.create_gui_window(coins_found, total)
 
 def main():
     png_files = []
