@@ -66,7 +66,7 @@ def muenzenZaehlen(imgpath):
     coins_found = ci.identifyCoins(original, rectangles)
     plot_images(cs.get_circle_in_rectangles(original, rectangles), coins_found)
 
-    print("Your total was: " + str(countCoins(coins_found))+ "Euro")
+    print("Your total was: " + "{:.2f}".format(countCoins(coins_found))+ " Eur")
 
 def plot_images(images, titles, num_cols=3):
     num_cols = min(3, len(images))

@@ -54,10 +54,10 @@ def analyzeColor(coin_cutout):
     # return find_closest_color(average_color)
 
     # check euros
-    silver = silverAmount(coin_cutout)
+    # silver = silverAmount(coin_cutout)
 
-    if "€" in silver:      
-        return ["1€", "2€"]
+    # if "€" in silver:      
+    #     return ["1€", "2€"]
     
     red = calculate_average_red(coin_cutout)
     blue = calculate_average_blue(coin_cutout)
@@ -65,6 +65,9 @@ def analyzeColor(coin_cutout):
     print(red)
     print(green)
     print(blue)
+
+    if abs(red-green) < 30 and blue > 40:
+        return ["1€", "2€"]
     
     print("_____")
     if red-green < 35:
@@ -92,6 +95,7 @@ def calculate_color_distance(color1, color2):
 
 def silverAmount(coin_cutout):
     amount = np.sum(coin_cutout > [150, 150, 150])
+    print("Silver " + str(amount))  
     if amount > 25000:
         return "2€"
     if amount > 20000 and amount < 25000:
