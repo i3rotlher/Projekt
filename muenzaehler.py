@@ -65,6 +65,7 @@ def plot_images(images, titles, num_cols=3):
             ax.set_visible(False)
 
     plt.savefig("GUI/tmp/detected_coins.png")
+    plt.close()
 
 def drawRectangles(img, rectanglesCoordinates): 
     new_img = img.copy()
@@ -108,6 +109,7 @@ def muenzenZaehlen(imgpath):
     plot_images(cs.get_circle_in_rectangles(original, rectangles), coins_found)
     total, coin_counts = countCoins(coins_found)
 
+    plt.close('all')
     gui.create_gui_window(coin_counts, total)
 
 def main():
