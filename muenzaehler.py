@@ -89,7 +89,6 @@ def muenzenZaehlen(imgpath):
     # Figure 1
     plt.figure()
     plt.imshow(original)
-
     plt.axis('off')
     plt.savefig("GUI/tmp/original.png")
 

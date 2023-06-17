@@ -1,0 +1,79 @@
+Aufbau:
+
+	image_prepocessing
+
+		Bild wird zu graustufe
+		Bild ist sehr verrauscht, daher matrix_filter.
+		Da rauschen relativ gut verteilt großer 1er filter.
+		Danach hintergrund nur schwarz. (Vorebereritung für segmentierung)
+
+		zu1Bit um Bild dann in schwarz weiß zu ändern, dadurch nur schwarzer hintergrund
+		münzen weiß
+
+	coin_segmentation
+
+		1. gedanke houghtransf:
+			aber komplizierter und aufwendig einzustellen + lange laufzeit
+			erkennt immer kreise in den kreisen wegen der 2€ 1€ münze
+			trotzdem implementiert
+
+		sequential_labeling, Münzen werden dadurch erkannt und pixel einer münze
+		bekommen das selbe label
+
+		funktion um die münzen einzeln zu bekommen
+
+		Kreis wird ausgenutzt, da rund nicht abgewinkelt, 
+		daher einfach den linkesten, rechtesten, obersten und untersten wert	
+		eines pixels mit dem label suchen
+			Dann die mitten = kreismitte
+			evtl daneben weil meherer pixel ganz rechts links... sein können
+
+		1. Versuch: kreise ausschneiden und zurückliefern
+			Funktion etabliert, darstellung aber schwierig
+
+		2. Versuch: einfach rechtecke um münzen ausschneiden
+			Rechteck kann aus den maximasa ersellt werden
+
+		3. Wichtig: Nicht vollständige münzen ignoreiren
+			Wenn höhe und breite nicht im ramen von 10 px gleich dann ignorieren
+		
+		4. Breite an Pixeln zurückliefern
+
+
+	coin_identifier
+
+		Durchschnittsweiten und farben vordefiniert.
+
+		Urteil aus Breite und Farbe der Münzenschnipsel:
+		
+		Da Münzen sehr ähnlich Breit gib mir die 2 Nähesten werte, bspw. 20ct, 1€
+		Dann Farbe analysieren und sagen ob es Euro, Zehner Cent (gold) oder ct (bronze)
+
+		1. Versuch: Zuerst durchschnittsfarben verwendet, aber je nach rauschen sehr anders.
+
+		2. Versuch zusätzlich silber suchen (nur Euros), schwer weil silber = helle pixel,
+			aber überbelichtetes Bild = helle pixel
+
+		3. Versuch: durschnittswert für r,g,b kanäle ermitteln
+			Dann durch viel trail and error und analysieren der farbewerte 
+			grenzwerte ermittelt um unterscheiden zu können
+		
+
+	muenzzaehler
+
+		liest bilder ein und ruft funktionen auf.
+
+		legt ergebnisse ab gibt diese an gui weiter
+
+		berechnet ergebnis
+
+	GUI
+		
+		erzeugt aus einem template für jedes eingelesene bild eine eigene html und öffnet diese im browser
+
+Zusatz:
+
+	number_finder.py
+		KI zur erkennung von Zahlen. Verworfen, wegen zu schelchter Qualität und mÜnzen verkehrt herum.
+
+	

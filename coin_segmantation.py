@@ -3,6 +3,7 @@ import numpy as np
 from PIL import Image
 import matplotlib.pyplot as plt
 import image_preprocessing as ip
+import cv2
 
 def segment_coins(image):
     segmented_coins = sequential_labeling(image)
@@ -172,3 +173,38 @@ def get_circle_in_rectangles(img, rectangles):
         circles.append(pixels)
 
     return circles
+
+def detect_circles(image):
+    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    gray = cv2.medianBlur(gray, 11)
+    circles = cv2.HoughCircles(gray, cv2.HOUGH_GRADIENT, dp=1, minDist=20,
+                               param1=50, param2=30, minRadius=5, maxRadius=100)
+
+    if circles is not None:
+        circles = np.round(circles[0, :]).astype(int)
+        # Sort the circles in descending order of radius
+        circles = sorted(circles, key=lambda x: x[2], reverse=True)
+        widths = []
+        outer_circles = []
+
+        for (x, y, r) in circles:
+            # Check if the current circle is completely outside any existing outer circle
+            is_outer_circle = True
+            for (cx, cy, cr) in outer_circles:
+                distance = np.sqrt((x - cx)**2 + (y - cy)**2)
+                if distance + r <= cr:
+                    is_outer_circle = False
+                    break
+            
+            if is_outer_circle:
+                # Calculate the width of the circle
+                width = r * 2
+                widths.append(width)
+
+                # Draw the detected circle on the image
+                cv2.circle(image, (x, y), r, (0, 255, 0), 2)
+                outer_circles.append((x, y, r))
+
+        return image, widths
+
+    return image, []

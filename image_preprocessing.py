@@ -86,3 +86,14 @@ def matrix_filter(in_image, filter, offset=1, edge='none'):
                 q = max
             new_img[int(v/offset)-1,int(u/offset)-1] = q
     return new_img
+
+def binary_to_rgb(binary_image):
+    # Create an empty RGB image with the same shape as the binary image
+    H, W = binary_image.shape
+    rgb_image = np.zeros((H, W, 3), dtype=np.uint8)
+
+    # Set the RGB values based on the binary values
+    rgb_image[binary_image == 1] = [255, 255, 255]
+    rgb_image[binary_image == 0] = [0, 0, 0]
+
+    return rgb_image

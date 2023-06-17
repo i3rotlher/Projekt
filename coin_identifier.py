@@ -71,6 +71,7 @@ def analyzeColor(coin_cutout):
 
     return ["1ct", "2ct", "5ct"]
 
+# not used
 def find_closest_color(color):
     closest_color_value = None
     closest_color_distance = float('inf')
@@ -98,6 +99,7 @@ def silverAmount(coin_cutout):
     else:
         return "ct" 
     
+# in use
 def calculate_average_red(image):
     red_channel = image[:,:,0]  # Extract the red channel
     non_black_pixels = red_channel > 0  # Create a mask for non-black pixels
